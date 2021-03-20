@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no,user-scalable=no,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="msapplication-square70x70logo" content="/images/favicons/site-tile-70x70.png">
+<meta name="msapplication-square150x150logo" content="/images/favicons/site-tile-150x150.png">
+<meta name="msapplication-wide310x150logo" content="/images/favicons/site-tile-310x150.png">
+<meta name="msapplication-square310x310logo" content="/images/favicons/site-tile-310x310.png">
+<meta name="msapplication-TileColor" content="#0078d7">
+<link rel="shortcut icon" type="image/vnd.microsoft.icon" href="/images/favicons/favicon.ico">
+<link rel="icon" type="image/vnd.microsoft.icon" href="/images/favicons/favicon.ico">
+<link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="36x36" href="/images/favicons/android-chrome-36x36.png">
+<link rel="icon" type="image/png" sizes="48x48" href="/images/favicons/android-chrome-48x48.png">
+<link rel="icon" type="image/png" sizes="72x72" href="/images/favicons/android-chrome-72x72.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/images/favicons/android-chrome-96x96.png">
+<link rel="icon" type="image/png" sizes="128x128" href="/images/favicons/android-chrome-128x128.png">
+<link rel="icon" type="image/png" sizes="144x144" href="/images/favicons/android-chrome-144x144.png">
+<link rel="icon" type="image/png" sizes="152x152" href="/images/favicons/android-chrome-152x152.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/images/favicons/android-chrome-192x192.png">
+<link rel="icon" type="image/png" sizes="256x256" href="/images/favicons/android-chrome-256x256.png">
+<link rel="icon" type="image/png" sizes="384x384" href="/images/favicons/android-chrome-384x384.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/images/favicons/android-chrome-512x512.png">
+<link rel="icon" type="image/png" sizes="36x36" href="/images/favicons/icon-36x36.png">
+<link rel="icon" type="image/png" sizes="48x48" href="/images/favicons/icon-48x48.png">
+<link rel="icon" type="image/png" sizes="72x72" href="/images/favicons/icon-72x72.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/images/favicons/icon-96x96.png">
+<link rel="icon" type="image/png" sizes="128x128" href="/images/favicons/icon-128x128.png">
+<link rel="icon" type="image/png" sizes="144x144" href="/images/favicons/icon-144x144.png">
+<link rel="icon" type="image/png" sizes="152x152" href="/images/favicons/icon-152x152.png">
+<link rel="icon" type="image/png" sizes="160x160" href="/images/favicons/icon-160x160.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/images/favicons/icon-192x192.png">
+<link rel="icon" type="image/png" sizes="196x196" href="/images/favicons/icon-196x196.png">
+<link rel="icon" type="image/png" sizes="256x256" href="/images/favicons/icon-256x256.png">
+<link rel="icon" type="image/png" sizes="384x384" href="/images/favicons/icon-384x384.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/images/favicons/icon-512x512.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/images/favicons/icon-16x16.png">
+<link rel="icon" type="image/png" sizes="24x24" href="/images/favicons/icon-24x24.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicons/icon-32x32.png">
+<link rel="manifest" href="/manifest.json">
+<title><%= process.env.app_title %></title>
+<script src="/jquery/jquery.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Material+Icons+Outlined" rel="stylesheet">
+<link rel="stylesheet" href="/stylesheets/vui.css?<%= new Date() %>">
+<%- include('./common/twcard') %>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.1/socket.io.min.js" integrity="sha512-tXH7Av8en7+/hg0XwBppaCDPmpJhUXbZ+j7lNC4y+ZQpmCZQcgQN6RjkM7Irj1MUW7bZengfuTOqR4RzCC4bnA==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<script src="https://momentjs.com/downloads/moment-timezone.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/ja.js" integrity="sha256-CFWtR1hGN/5Vc+kcJkqeMFND0g6gFFZdnSqUtdL7WOQ=" crossorigin="anonymous"></script>
+</head>
+<body>
+<%- include('./common/header',{'path':'live','title':'ライブ配信'}) %>
+<div class="vui main" style="position:relative;">
+<div class="vui live">
+<img class="image cast" src="<%= cast.profile_icon %>" alt="">
+<span class="name cast">
+<%= cast.name %>
+</span>
+<button class="vui button big red connect-btn" style="margin-top:1rem;">視聴開始</button>
+<button class="vui button big red mute-btn" style="display:none;margin-top:1rem;">ミュート解除</button>
+<audio id="audio" width="400px" autoplay muted playsinline></audio>
+<div class="vui comments">
+</div>
+<% if(user_token !== "_aegi_guest"){ %>
+<div class="vui comment form">
+<input type="text" class="vui input comment-txt" placeholder="コメント…">
+<button class="vui button icon comment-submit" style="background-color:#fff;margin-left:10px;"><span class="material-icons-outlined">near_me</span></button>
+</div>
+<% }else{ %>
+<div class="vui comment form">
+<input type="text" disabled class="vui input comment-txt" placeholder="コメントをするにはログインしてください">
+<button disabled class="vui button icon comment-submit" style="background-color:#fff;margin-left:10px;"><span class="material-icons-outlined">near_me</span></button>
+</div>
+<% } %>
+</div>
+</div>
+<script src="https://cdn.webrtc.ecl.ntt.com/skyway-4.4.0.js"></script>
+<script>
+    var socket = io.connect("<%= process.env.wss_url %>");
+//コメント関連
+$(".comment-submit").click(function(){
+    socket.emit('comment',{
+        fromId : '<%= user.username %>',
+        fromName : '<%= user.name %>',
+        fromProfileIcon : '<%= user.profile_icon %>',
+        toId : '<%= castId %>',
+        message : $(".comment-txt").val()
+    })
+    $(".comment-txt").val("");
+})
+socket.on("comment",function(data,fn){
+    if(data.toId == "<%= castId %>"){
+        if(data.fromId == "<%= castId %>"){
+            var _comment = "<div class='item owner'>";
+            _comment += '<div class="userinfo">';
+            _comment += '<img class="userimage" src="'+data.fromProfileIcon+'"">';
+            _comment += '<div class="tweetinfo">';
+            _comment += '<span class="username">'+data.fromName+'・<span class="datetime" data-datetime="'+data.createdAt+'"></span></span>';
+            _comment += '<div class="tweet">'+data.message+'</div>';
+            _comment += '</div>';
+            _comment += '</div>';
+            _comment += '</div>';
+        }else{
+            var _comment = "<div class='item'>";
+            _comment += '<div class="userinfo">';
+            _comment += '<img class="userimage" src="'+data.fromProfileIcon+'"">';
+            _comment += '<div class="tweetinfo">';
+            _comment += '<span class="username">'+data.fromName+'・<span class="datetime" data-datetime="'+data.createdAt+'"></span></span>';
+            _comment += '<div class="tweet">'+data.message+'</div>';
+            _comment += '</div>';
+            _comment += '</div>';
+            _comment += '</div>';
+        }
+        $(".vui.comments").prepend(_comment);
+    }
+})
+    /*
+    let localStream;
+    // カメラ映像取得
+    navigator.mediaDevices.getUserMedia({video: false, audio: true})
+      .then( stream => {
+      // 成功時にvideo要素にカメラ映像をセットし、再生
+      const audioElm = document.getElementById('my-audio');
+      audioElm.srcObject = stream;
+      audioElm.play();
+      // 着信時に相手にカメラ映像を返せるように、グローバル変数に保存しておく
+      localStream = stream;
+    }).catch( error => {
+      // 失敗時にはエラーログを出力
+      console.error('mediaDevice.getUserMedia() error:', error);
+      return;
+    });
+    */
+    //リスナー様ご来店
+    const peer = new Peer({
+        key: '4fa5667a-01e0-4038-baa4-880ef6e1e015',
+        debug: 3
+    });
+    $(".vui.button.connect-btn").click(function(){
+        const mediaConnection = peer.call("<%= castId %>");
+        setEventListener(mediaConnection);
+        $(this).css("display","none");
+        $(".mute-btn").css("display","block");
+    })
+    $(".vui.button.mute-btn").click(function(){
+        if(document.getElementById('audio').muted == false){
+            document.getElementById('audio').muted = true;
+            $(this).text("ミュート解除");
+        }else if(document.getElementById('audio').muted == true){
+            document.getElementById('audio').muted = false;
+            $(this).text("ミュートにする");
+        }
+    })
+
+    // イベントリスナを設置する関数
+    const setEventListener = mediaConnection => {
+        mediaConnection.on('stream', stream => {
+            // video要素にカメラ映像をセットして再生
+            const videoElm = document.getElementById('audio');
+            videoElm.srcObject = stream;
+            videoElm.play();
+        });
+    }
+    //audio関連
+    document.getElementById('audio').addEventListener("timeupdate",(event) => {
+        $(".vui.header .center").text(toHms(Math.floor(document.getElementById('audio').currentTime)));
+    })
+    function toHms(t) {
+        var hms = "";
+        var h = t / 3600 | 0;
+        var m = t % 3600 / 60 | 0;
+        var s = t % 60;
+
+        if (h != 0) {
+            hms = padZero(h) + ":" + padZero(m) + ":" + padZero(s);
+        } else if (m != 0) {
+            hms = padZero(m) + ":" + padZero(s);
+        } else {
+            hms = "00:" + padZero(s);
+        }
+
+        return hms;
+
+        function padZero(v) {
+            if (v < 10) {
+                return "0" + v;
+            } else {
+                return v;
+            }
+        }
+    }
+    //日付処理...
+moment.tz.setDefault("Asia/Tokyo");
+const countUp = () => {
+$('.datetime').each(function(index, element){
+var postDate = new Date($(element).data('datetime'));
+$(element).text(moment(postDate.toISOString()).fromNow());
+});
+}
+setInterval(countUp, 1000);
+  </script>
+<%- include('./common/footer',{'path':'live'}) %>
+</body>
+</html>

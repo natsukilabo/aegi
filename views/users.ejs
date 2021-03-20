@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>リモパイ</title>
+<link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body onload="init()">
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>
+<script>
+var req_userid = '<%= user_token %>';
+Cookies.set('user_token', req_userid,{ expires: 7 });
+var back_url = Cookies.get('back_url');
+if(back_url !== undefined){
+location.href=back_url;
+}else{
+location.href="<%= process.env.app_url %>";
+}
+</script>
+</body>
+</html>

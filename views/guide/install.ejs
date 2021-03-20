@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no,user-scalable=no,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="msapplication-square70x70logo" content="/images/favicons/site-tile-70x70.png">
+<meta name="msapplication-square150x150logo" content="/images/favicons/site-tile-150x150.png">
+<meta name="msapplication-wide310x150logo" content="/images/favicons/site-tile-310x150.png">
+<meta name="msapplication-square310x310logo" content="/images/favicons/site-tile-310x310.png">
+<meta name="msapplication-TileColor" content="#0078d7">
+<link rel="shortcut icon" type="image/vnd.microsoft.icon" href="/images/favicons/favicon.ico">
+<link rel="icon" type="image/vnd.microsoft.icon" href="/images/favicons/favicon.ico">
+<link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="36x36" href="/images/favicons/android-chrome-36x36.png">
+<link rel="icon" type="image/png" sizes="48x48" href="/images/favicons/android-chrome-48x48.png">
+<link rel="icon" type="image/png" sizes="72x72" href="/images/favicons/android-chrome-72x72.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/images/favicons/android-chrome-96x96.png">
+<link rel="icon" type="image/png" sizes="128x128" href="/images/favicons/android-chrome-128x128.png">
+<link rel="icon" type="image/png" sizes="144x144" href="/images/favicons/android-chrome-144x144.png">
+<link rel="icon" type="image/png" sizes="152x152" href="/images/favicons/android-chrome-152x152.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/images/favicons/android-chrome-192x192.png">
+<link rel="icon" type="image/png" sizes="256x256" href="/images/favicons/android-chrome-256x256.png">
+<link rel="icon" type="image/png" sizes="384x384" href="/images/favicons/android-chrome-384x384.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/images/favicons/android-chrome-512x512.png">
+<link rel="icon" type="image/png" sizes="36x36" href="/images/favicons/icon-36x36.png">
+<link rel="icon" type="image/png" sizes="48x48" href="/images/favicons/icon-48x48.png">
+<link rel="icon" type="image/png" sizes="72x72" href="/images/favicons/icon-72x72.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/images/favicons/icon-96x96.png">
+<link rel="icon" type="image/png" sizes="128x128" href="/images/favicons/icon-128x128.png">
+<link rel="icon" type="image/png" sizes="144x144" href="/images/favicons/icon-144x144.png">
+<link rel="icon" type="image/png" sizes="152x152" href="/images/favicons/icon-152x152.png">
+<link rel="icon" type="image/png" sizes="160x160" href="/images/favicons/icon-160x160.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/images/favicons/icon-192x192.png">
+<link rel="icon" type="image/png" sizes="196x196" href="/images/favicons/icon-196x196.png">
+<link rel="icon" type="image/png" sizes="256x256" href="/images/favicons/icon-256x256.png">
+<link rel="icon" type="image/png" sizes="384x384" href="/images/favicons/icon-384x384.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/images/favicons/icon-512x512.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/images/favicons/icon-16x16.png">
+<link rel="icon" type="image/png" sizes="24x24" href="/images/favicons/icon-24x24.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicons/icon-32x32.png">
+<link rel="manifest" href="/manifest.json">
+<title><%= process.env.app_title %></title>
+<script src="/jquery/jquery.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Material+Icons+Outlined" rel="stylesheet">
+<link rel="stylesheet" href="/stylesheets/vui.css?<%= new Date() %>">
+<%- include('../common/twcard') %>
+</head>
+<body>
+<%- include('../common/header',{'path':'guide','title':'セットアップガイド'}) %>
+<div class="vui main" style="display:flex;flex-direction: column;justify-content:flex-start;align-items:flex-start;color:#aaa;padding:20px;box-sizing:border-box;">
+<h2>iPhoneにインストールする方法</h2>
+<p style="line-height:2rem;">
+iPhoneのSafariから「https://remopi.app」へアクセスしてください。<br/>
+画面下部の <span class="material-icons-outlined">ios_share</span> をタップします。<br/>
+「ホーム画面に追加」をタップし、右上の「追加」をタップします。<br/>
+すると、ホーム画面に「リモパイ」が追加されています。<br/>
+次回からは、ホーム画面にある「リモパイ」をタップすることで、アプリと同じような使い方ができます。
+</p>
+<div class="vui divider"></div>
+<h2>Androidにインストールする方法</h2>
+<p style="line-height:2rem;">
+AndroidのChromeから「https://remopi.app」へアクセスしてください。<br/>
+画面下部にインストール案内が表示されます。<br/>
+「インストール」をタップしてください。<br/>
+すると、ホーム画面に「リモパイ」が追加されています。<br/>
+次回からは、ホーム画面にある「リモパイ」をタップすることで、アプリと同じような使い方ができます。
+</p>
+</div>
+<%- include('../common/footer',{'path':'guide'}) %>
+</body>
+</html>

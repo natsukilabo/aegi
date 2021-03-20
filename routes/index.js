@@ -1,0 +1,78 @@
+var express = require('express');
+var router = express.Router();
+require('dotenv').config()
+var request = require('request');
+var parser = require('ua-parser-js');
+const MongoClient = require('mongodb').MongoClient;
+const assert = require('assert');
+const url = process.env.mongodb;
+const uuid = require("uuid");
+
+router.get('/', function(req, res, next) {
+var user_token = req.cookies.user_token;
+var ua = parser(req.headers['user-agent']);
+if(ua.os.name !== "iOS" && ua.os.name !== "Android"){
+res.render('index', {type:"pc",user_token:user_token});
+}else{
+res.render('index', {type:"sp",user_token:user_token});
+}
+});
+
+router.get('/live/@:id', function(req, res, next) {
+    var user_token = req.cookies.user_token;
+    if(user_token == undefined){
+        user_token = '_aegi_guest';
+    }
+    var username = req.params.id;
+    MongoClient.connect(url, (err, client) => {
+        const db = client.db('aegi');
+        assert.equal(null, err)
+        db.collection("users").findOne({username:username}, function(err, doc){
+            db.collection("users").findOne({userid:user_token}, function(err, doc2){
+                res.render('live',{
+                    castId:req.params.id,
+                    cast:doc,
+                    user:doc2,
+                    user_token:user_token
+                });
+            });
+        });
+    });
+});
+
+router.get('/broadcast', function(req, res, next) {
+    var user_token = req.cookies.user_token;
+    var username = req.params.id;
+    MongoClient.connect(url, (err, client) => {
+        const db = client.db('aegi');
+        assert.equal(null, err)
+        db.collection("users").findOne({userid:user_token}, function(err, doc){
+            res.render('broadcast',{
+                cast:doc,
+                user_token:user_token
+            });
+        });
+    });
+});
+
+router.get('/guide/install', function(req, res, next) {
+var user_token = req.cookies.user_token;
+res.render('guide/install', {user_token:user_token});
+});
+
+router.get('/@:id', function(req, res, next) {
+var user_token = req.cookies.user_token;
+var username = req.params.id;
+MongoClient.connect(url, (err, client) => {
+const db = client.db('remobooo');
+assert.equal(null, err)
+db.collection("users").findOne({username:username}, function(err, doc){
+res.render('user',{
+user:doc,
+user_token:user_token
+});
+});
+});
+});
+
+module.exports = router;

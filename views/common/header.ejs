@@ -1,0 +1,60 @@
+<div class="vui sidebarBack"></div>
+<div class="vui popupBack"></div>
+<div class="vui sidebar">
+<div class="group">
+<div class="item">
+<span class="material-icons-outlined">
+article
+</span>
+セットアップガイド
+</div>
+<a class="item second" href="<%= process.env.app_url %>guide/install">
+インストール方法
+</a>
+<div class="item">
+<span class="material-icons-outlined">
+settings
+</span>
+各種設定
+</div>
+<a class="item second" href="<%= process.env.app_url %>settings/profile">
+プロフィール設定
+</a>
+<a class="item" href="<%= process.env.app_url %>logout">
+<span class="material-icons-outlined">
+logout
+</span>
+ログアウト
+</a>
+<div class="item">
+<span class="material-icons-outlined">
+storage
+</span>
+Version : <%= process.env.app_version %>
+</div>
+</div>
+</div>
+<div class="vui header">
+<% if(path == "mypage" || path == "session" || path == "settings" || path == "notifications" || path == "guide"){ %>
+<div class="left back button">
+<span class="material-icons-outlined">
+chevron_left
+</span>
+</div>
+<% }else{ %>
+<div class="left">
+</div>
+<% } %>
+<div class="center">
+<% if(path == "top"){ %>
+<img src="/images/logo.png" class="logo" alt="">
+<% }else{ %>
+<%= title %>
+<% } %>
+</div>
+<div class="right menu button">
+<span class="material-icons-outlined">
+menu
+</span>
+</div>
+</div>

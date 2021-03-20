@@ -1,0 +1,47 @@
+<div class="vui footer four items">
+<a class="item<% if(path == "top"){%> active<% } %>" href="<%= process.env.app_url %>">
+<span class="material-icons-outlined">
+home
+</span>
+</a>
+<div class="item<% if(path == "tipsettings"){%> active<% } %>">
+<span class="material-icons-outlined">
+headphones
+</span>
+</div>
+<a class="item<% if(path == "live"){%> active<% } %>" href="<%= process.env.app_url %>broadcast">
+<span class="material-icons-outlined">
+bolt
+</span>
+</a>
+<% if(user_token !== undefined){%>
+<div class="item<% if(path == "mypage"){%> active<% } %>">
+<img src="<%= process.env.app_url %>api/v1/user/image/<%= user_token %>" class="user-icon">
+</div>
+<% }else{%>
+<a class="item" href="<%= process.env.app_url %>auth/twitter">
+<span class="material-icons-outlined">
+account_circle
+</span>
+</a>
+<% } %>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="/javascripts/vui.min.js?<%= new Date() %>" charset="utf-8"></script>
+<script type="text/javascript">
+//vui
+$(".item.poplink").popup({type:"open"});
+$('.vui.popupBack').popup({type:"close"});
+$('.menu.button').menu({type:"open"});
+$('.back.button').menu({type:"back"});
+$('.refresh.button').menu({type:"refresh"});
+$('.vui.sidebarBack').menu({type:"close"});
+//ServiceWorker
+if ('serviceWorker' in navigator) {
+navigator.serviceWorker.register('/sw.js').then(function(registration) {
+console.log('ServiceWorker registration successful with scope: ', registration.scope);
+}).catch(function(err) {
+console.log('ServiceWorker registration failed: ', err);
+});
+}
+</script>
