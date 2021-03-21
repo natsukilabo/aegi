@@ -13,6 +13,7 @@ var user_token = req.cookies.user_token;
 res.render('index', {type:"pc",user_token:user_token});
 });
 
+
 router.get('/livelist',function(req,res,next){
 var user_token = req.cookies.user_token;
 if(user_token == undefined){
@@ -68,6 +69,21 @@ user_token:user_token
 });
 });
 });
+
+router.get('/live/end', function(req, res, next) {
+    var user_token = req.cookies.user_token;
+    var username = req.params.id;
+    MongoClient.connect(url, (err, client) => {
+    const db = client.db('aegi');
+    assert.equal(null, err)
+    db.collection("users").findOne({userid:user_token}, function(err, doc){
+    res.render('live_end',{
+    cast:doc,
+    user_token:user_token
+    });
+    });
+    });
+    });
 
 router.get('/guide/install', function(req, res, next) {
 var user_token = req.cookies.user_token;
