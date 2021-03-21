@@ -60,6 +60,10 @@
 <% if(user_token !== undefined){ %>
 <img src="/images/logo-pink.png" style="width:130px;">
 <span style="margin-top:30px;"><%= process.env.app_title %> v<%= process.env.app_version %></span>
+<a class="vui button big red icon left" style="margin-top:1.5rem;" href="<%= process.env.app_url %>livelist">
+<span class="material-icons-outlined">headphones</span>
+配信中のキャスト
+</a>
 <a class="vui button big red icon left" style="margin-top:1.5rem;" href="<%= process.env.app_url %>broadcast">
 <span class="material-icons-outlined">bolt</span>
 ラジオ配信をする
