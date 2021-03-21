@@ -4,10 +4,9 @@
 "description":"AEGI",
 "start_url":".",
 "display":"standalone",
-"orientation":"any",
+"orientation":"portrait",
 "theme_color": "#C747A2",
 "background_color": "#C747A2",
-"orientation":"any",
 "icons": [
 {
 "src": "https://aegi.live/images/favicons/android-chrome-36x36.png",
