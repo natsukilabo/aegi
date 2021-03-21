@@ -173,7 +173,6 @@ castId:'<%= cast.username %>',
 liveStatus:false
 }
 $.post('<%= process.env.app_url %>api/v1/broadcast',data,null,"json");
-$(this).html('<span class="material-icons-outlined">bolt</span>配信を始める');
 _live_status = false;
 location.href = "<%= process.env.app_url %>live/end";
 }
