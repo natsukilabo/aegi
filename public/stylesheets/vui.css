@@ -428,6 +428,8 @@ margin:0px;
 .vui.main{
 position:absolute;
 top:64px;
+top:calc(64px + constant(safe-area-inset-top));
+top:calc(64px + env(safe-area-inset-top));
 left:0px;
 right:0;
 height:calc(100% - 108px);
@@ -439,8 +441,6 @@ min-height:calc(100% - (108px + env(safe-area-inset-bottom) + env(safe-area-inse
 width:100%;
 padding:0px;
 margin:0px auto;
-margin-top:constant(safe-area-inset-top);
-margin-top:env(safe-area-inset-top);
 overflow-y:auto;
 }
 .vui.main .content.title{
