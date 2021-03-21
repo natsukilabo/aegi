@@ -53,24 +53,56 @@
 <link href="https://fonts.googleapis.com/css?family=Material+Icons+Outlined" rel="stylesheet">
 <link rel="stylesheet" href="/stylesheets/vui.css?<%= new Date() %>">
 <%- include('./common/twcard') %>
+<style>
+.vui.cast.list{
+    display:flex;
+    justify-content:flex-start;
+    padding:0px;
+    margin:0px;
+}
+.vui.cast.list .cast{
+    position:relative;
+    width:50%;
+    padding:0px;
+    margin:0px;
+}
+.vui.cast.list .cast img{
+    display:block;
+    width:100%;
+    padding:0px;
+    margin:0px;
+    vertical-align:bottom;
+}
+.vui.cast.list .cast .name{
+    position:absolute;
+    bottom:0;
+    left:0;
+    right:0;
+    background-color:rgba(0,0,0,0.7);
+    color:#fff;
+    width:100%;
+    line-height:2.5rem;
+    text-align:center;
+    padding:0px;
+    margin:0px;
+}
+</style>
 </head>
 <body>
-<%- include('./common/header',{'path':'top','title':'UDriver'}) %>
-<div class="vui main" style="display:flex;flex-direction: column;justify-content:center;align-items:center;color:#aaa;">
-<% if(user_token !== undefined){ %>
-<img src="/images/logo-pink.png" style="width:130px;">
-<span style="margin-top:30px;"><%= process.env.app_title %> v<%= process.env.app_version %></span>
-<a class="vui button big red icon left" style="margin-top:1.5rem;" href="<%= process.env.app_url %>broadcast">
-<span class="material-icons-outlined">bolt</span>
-ラジオ配信をする
+<%- include('./common/header',{'path':'livelist','title':'配信中のキャスト一覧'}) %>
+<div class="vui main">
+<div class="vui cast list">
+<% if(casts !== undefined){casts.forEach(function(cast){ %>
+<a class="cast" href="<%= process.env.app_url %>live/@<%= cast.username %>">
+<img src="<%= cast.profile_icon %>">
+<span class="name">
+<%= cast.name %>
+</span>
 </a>
-<% }else{ %>
-<img src="/images/logo-pink.png" style="width:130px;">
-<span style="margin-top:30px;"><%= process.env.app_title %> v<%= process.env.app_version %></span>
-<span style="margin-top:30px;">ツイッターアカウントでログインしましょう</span>
-<a href="<%= process.env.app_url %>auth/twitter" class="vui button big red icon left" style="margin-top:1rem;"><span class="material-icons-outlined">login</span>ログイン</a>
-<% } %>
+<% })} %>
 </div>
-<%- include('./common/footer',{'path':'top'}) %>
+</div>
+</div>
+<%- include('./common/footer',{'path':'livelist'}) %>
 </body>
 </html>

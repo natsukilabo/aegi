@@ -4,11 +4,11 @@
 home
 </span>
 </a>
-<div class="item<% if(path == "tipsettings"){%> active<% } %>">
+<a class="item<% if(path == "livelist"){%> active<% } %>" href="<%= process.env.app_url %>livelist">
 <span class="material-icons-outlined">
 headphones
 </span>
-</div>
+</a>
 <a class="item<% if(path == "live"){%> active<% } %>" href="<%= process.env.app_url %>broadcast">
 <span class="material-icons-outlined">
 bolt

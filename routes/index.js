@@ -10,49 +10,63 @@ const uuid = require("uuid");
 
 router.get('/', function(req, res, next) {
 var user_token = req.cookies.user_token;
-var ua = parser(req.headers['user-agent']);
-if(ua.os.name !== "iOS" && ua.os.name !== "Android"){
 res.render('index', {type:"pc",user_token:user_token});
-}else{
-res.render('index', {type:"sp",user_token:user_token});
-}
 });
 
+router.get('/livelist',function(req,res,next){
+var user_token = req.cookies.user_token;
+if(user_token == undefined){
+user_token = '_aegi_guest';
+}
+var username = req.params.id;
+MongoClient.connect(url, (err, client) => {
+const db = client.db('aegi');
+assert.equal(null, err)
+db.collection("users").find({liveStatus:"true"}).toArray(function(err, doc) {
+console.log(doc);
+res.render('livelist',{
+casts:doc,
+user_token:user_token
+});
+});
+});
+})
+
 router.get('/live/@:id', function(req, res, next) {
-    var user_token = req.cookies.user_token;
-    if(user_token == undefined){
-        user_token = '_aegi_guest';
-    }
-    var username = req.params.id;
-    MongoClient.connect(url, (err, client) => {
-        const db = client.db('aegi');
-        assert.equal(null, err)
-        db.collection("users").findOne({username:username}, function(err, doc){
-            db.collection("users").findOne({userid:user_token}, function(err, doc2){
-                res.render('live',{
-                    castId:req.params.id,
-                    cast:doc,
-                    user:doc2,
-                    user_token:user_token
-                });
-            });
-        });
-    });
+var user_token = req.cookies.user_token;
+if(user_token == undefined){
+user_token = '_aegi_guest';
+}
+var username = req.params.id;
+MongoClient.connect(url, (err, client) => {
+const db = client.db('aegi');
+assert.equal(null, err)
+db.collection("users").findOne({username:username}, function(err, doc){
+db.collection("users").findOne({userid:user_token}, function(err, doc2){
+res.render('live',{
+castId:req.params.id,
+cast:doc,
+user:doc2,
+user_token:user_token
+});
+});
+});
+});
 });
 
 router.get('/broadcast', function(req, res, next) {
-    var user_token = req.cookies.user_token;
-    var username = req.params.id;
-    MongoClient.connect(url, (err, client) => {
-        const db = client.db('aegi');
-        assert.equal(null, err)
-        db.collection("users").findOne({userid:user_token}, function(err, doc){
-            res.render('broadcast',{
-                cast:doc,
-                user_token:user_token
-            });
-        });
-    });
+var user_token = req.cookies.user_token;
+var username = req.params.id;
+MongoClient.connect(url, (err, client) => {
+const db = client.db('aegi');
+assert.equal(null, err)
+db.collection("users").findOne({userid:user_token}, function(err, doc){
+res.render('broadcast',{
+cast:doc,
+user_token:user_token
+});
+});
+});
 });
 
 router.get('/guide/install', function(req, res, next) {

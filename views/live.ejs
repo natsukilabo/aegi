@@ -66,8 +66,21 @@
 <span class="name cast">
 <%= cast.name %>
 </span>
-<button class="vui button big red connect-btn" style="margin-top:1rem;">視聴開始</button>
-<button class="vui button big red mute-btn" style="display:none;margin-top:1rem;">ミュート解除</button>
+<% if(cast.liveStatus == true){ %>
+<button class="vui button big red connect-btn icon left" style="margin-top:1rem;">
+<span class="material-icons-outlined">bolt</span>
+視聴を開始する
+</button>
+<button class="vui button big red icon left mute-btn" style="display:none;margin-top:1rem;">
+<span class="material-icons-outlined">headset</span>
+ミュート解除
+</button>
+<% }else{ %>
+<div class="vui button big red icon left" style="margin-top:1rem;">
+<span class="material-icons-outlined">bolt</span>
+まだ始まってません
+</div>
+<% } %>
 <audio id="audio" width="400px" autoplay muted playsinline></audio>
 <div class="vui comments">
 </div>
@@ -86,120 +99,105 @@
 </div>
 <script src="https://cdn.webrtc.ecl.ntt.com/skyway-4.4.0.js"></script>
 <script>
-    var socket = io.connect("<%= process.env.wss_url %>");
+var socket = io.connect("<%= process.env.wss_url %>");
 //コメント関連
 $(".comment-submit").click(function(){
-    socket.emit('comment',{
-        fromId : '<%= user.username %>',
-        fromName : '<%= user.name %>',
-        fromProfileIcon : '<%= user.profile_icon %>',
-        toId : '<%= castId %>',
-        message : $(".comment-txt").val()
-    })
-    $(".comment-txt").val("");
+if($(".comment-txt").val() !== ""){
+socket.emit('comment',{
+fromId : '<%= user.username %>',
+fromName : '<%= user.name %>',
+fromProfileIcon : '<%= user.profile_icon %>',
+toId : '<%= castId %>',
+message : $(".comment-txt").val()
+})
+$(".comment-txt").val("");
+}
 })
 socket.on("comment",function(data,fn){
-    if(data.toId == "<%= castId %>"){
-        if(data.fromId == "<%= castId %>"){
-            var _comment = "<div class='item owner'>";
-            _comment += '<div class="userinfo">';
-            _comment += '<img class="userimage" src="'+data.fromProfileIcon+'"">';
-            _comment += '<div class="tweetinfo">';
-            _comment += '<span class="username">'+data.fromName+'・<span class="datetime" data-datetime="'+data.createdAt+'"></span></span>';
-            _comment += '<div class="tweet">'+data.message+'</div>';
-            _comment += '</div>';
-            _comment += '</div>';
-            _comment += '</div>';
-        }else{
-            var _comment = "<div class='item'>";
-            _comment += '<div class="userinfo">';
-            _comment += '<img class="userimage" src="'+data.fromProfileIcon+'"">';
-            _comment += '<div class="tweetinfo">';
-            _comment += '<span class="username">'+data.fromName+'・<span class="datetime" data-datetime="'+data.createdAt+'"></span></span>';
-            _comment += '<div class="tweet">'+data.message+'</div>';
-            _comment += '</div>';
-            _comment += '</div>';
-            _comment += '</div>';
-        }
-        $(".vui.comments").prepend(_comment);
-    }
+if(data.toId == "<%= castId %>"){
+if(data.fromId == "<%= castId %>"){
+var _comment = "<div class='item owner'>";
+_comment += '<div class="userinfo">';
+_comment += '<img class="userimage" src="'+data.fromProfileIcon+'"">';
+_comment += '<div class="tweetinfo">';
+_comment += '<span class="username">'+data.fromName+'・<span class="datetime" data-datetime="'+data.createdAt+'"></span></span>';
+_comment += '<div class="tweet">'+data.message+'</div>';
+_comment += '</div>';
+_comment += '</div>';
+_comment += '</div>';
+}else{
+var _comment = "<div class='item'>";
+_comment += '<div class="userinfo">';
+_comment += '<img class="userimage" src="'+data.fromProfileIcon+'"">';
+_comment += '<div class="tweetinfo">';
+_comment += '<span class="username">'+data.fromName+'・<span class="datetime" data-datetime="'+data.createdAt+'"></span></span>';
+_comment += '<div class="tweet">'+data.message+'</div>';
+_comment += '</div>';
+_comment += '</div>';
+_comment += '</div>';
+}
+$(".vui.comments").prepend(_comment);
+}
 })
-    /*
-    let localStream;
-    // カメラ映像取得
-    navigator.mediaDevices.getUserMedia({video: false, audio: true})
-      .then( stream => {
-      // 成功時にvideo要素にカメラ映像をセットし、再生
-      const audioElm = document.getElementById('my-audio');
-      audioElm.srcObject = stream;
-      audioElm.play();
-      // 着信時に相手にカメラ映像を返せるように、グローバル変数に保存しておく
-      localStream = stream;
-    }).catch( error => {
-      // 失敗時にはエラーログを出力
-      console.error('mediaDevice.getUserMedia() error:', error);
-      return;
-    });
-    */
-    //リスナー様ご来店
-    const peer = new Peer({
-        key: '4fa5667a-01e0-4038-baa4-880ef6e1e015',
-        debug: 3
-    });
-    $(".vui.button.connect-btn").click(function(){
-        const mediaConnection = peer.call("<%= castId %>");
-        setEventListener(mediaConnection);
-        $(this).css("display","none");
-        $(".mute-btn").css("display","block");
-    })
-    $(".vui.button.mute-btn").click(function(){
-        if(document.getElementById('audio').muted == false){
-            document.getElementById('audio').muted = true;
-            $(this).text("ミュート解除");
-        }else if(document.getElementById('audio').muted == true){
-            document.getElementById('audio').muted = false;
-            $(this).text("ミュートにする");
-        }
-    })
 
-    // イベントリスナを設置する関数
-    const setEventListener = mediaConnection => {
-        mediaConnection.on('stream', stream => {
-            // video要素にカメラ映像をセットして再生
-            const videoElm = document.getElementById('audio');
-            videoElm.srcObject = stream;
-            videoElm.play();
-        });
-    }
-    //audio関連
-    document.getElementById('audio').addEventListener("timeupdate",(event) => {
-        $(".vui.header .center").text(toHms(Math.floor(document.getElementById('audio').currentTime)));
-    })
-    function toHms(t) {
-        var hms = "";
-        var h = t / 3600 | 0;
-        var m = t % 3600 / 60 | 0;
-        var s = t % 60;
+const peer = new Peer({
+key: '4fa5667a-01e0-4038-baa4-880ef6e1e015',
+debug: 3
+});
+$(".vui.button.connect-btn").click(function(){
+const mediaConnection = peer.call("<%= castId %>");
+setEventListener(mediaConnection);
+$(this).css("display","none");
+$(".mute-btn").css("display","flex");
+})
+$(".vui.button.mute-btn").click(function(){
+if(document.getElementById('audio').muted == false){
+document.getElementById('audio').muted = true;
+$(this).html("<span class='material-icons-outlined'>headset</span>ミュート解除");
+}else if(document.getElementById('audio').muted == true){
+document.getElementById('audio').muted = false;
+$(this).html("<span class='material-icons-outlined'>headset_off</span>ミュートにする");
+}
+})
 
-        if (h != 0) {
-            hms = padZero(h) + ":" + padZero(m) + ":" + padZero(s);
-        } else if (m != 0) {
-            hms = padZero(m) + ":" + padZero(s);
-        } else {
-            hms = "00:" + padZero(s);
-        }
+// イベントリスナを設置する関数
+const setEventListener = mediaConnection => {
+mediaConnection.on('stream', stream => {
+// video要素にカメラ映像をセットして再生
+const videoElm = document.getElementById('audio');
+videoElm.srcObject = stream;
+videoElm.play();
+});
+}
+//audio関連
+document.getElementById('audio').addEventListener("timeupdate",(event) => {
+$(".vui.header .center").text(toHms(Math.floor(document.getElementById('audio').currentTime)));
+})
+function toHms(t) {
+var hms = "";
+var h = t / 3600 | 0;
+var m = t % 3600 / 60 | 0;
+var s = t % 60;
 
-        return hms;
+if (h != 0) {
+hms = padZero(h) + ":" + padZero(m) + ":" + padZero(s);
+} else if (m != 0) {
+hms = padZero(m) + ":" + padZero(s);
+} else {
+hms = "00:" + padZero(s);
+}
 
-        function padZero(v) {
-            if (v < 10) {
-                return "0" + v;
-            } else {
-                return v;
-            }
-        }
-    }
-    //日付処理...
+return hms;
+
+function padZero(v) {
+if (v < 10) {
+return "0" + v;
+} else {
+return v;
+}
+}
+}
+//日付処理...
 moment.tz.setDefault("Asia/Tokyo");
 const countUp = () => {
 $('.datetime').each(function(index, element){
@@ -208,7 +206,7 @@ $(element).text(moment(postDate.toISOString()).fromNow());
 });
 }
 setInterval(countUp, 1000);
-  </script>
+</script>
 <%- include('./common/footer',{'path':'live'}) %>
 </body>
 </html>

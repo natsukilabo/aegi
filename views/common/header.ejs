@@ -20,6 +20,17 @@ settings
 <a class="item second" href="<%= process.env.app_url %>settings/profile">
 プロフィール設定
 </a>
+<% if(path == "broadcast"){ %>
+<div class="item">
+<span class="material-icons-outlined">
+share
+</span>
+共有
+</div>
+<a class="item second" target="_blank" href="https://twitter.com/share?text=AEGIで<%= cast.name %>さんが配信中！&url=<%= process.env.app_url %>live/@<%= cast.username %>&hashtags=AEGI_LIVE">
+配信をシェアする
+</a>
+<% } %>
 <a class="item" href="<%= process.env.app_url %>logout">
 <span class="material-icons-outlined">
 logout
