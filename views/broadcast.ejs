@@ -58,6 +58,25 @@
 <script src="https://momentjs.com/downloads/moment-timezone.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/ja.js" integrity="sha256-CFWtR1hGN/5Vc+kcJkqeMFND0g6gFFZdnSqUtdL7WOQ=" crossorigin="anonymous"></script>
 <style>
+    .vui.guest.count{
+        position:absolute;
+        top:10px;
+        left:10px;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        background-color:rgba(0,0,0,0.7);
+        color:#fff;
+        font-size:14px;
+        font-weight:bold;
+        border-radius:10px;
+        padding:10px;
+        margin:0px;
+        z-index:100;
+    }
+    .vui.guest.count .material-icons-outlined{
+        margin-right:5px;
+    }
     .vui.share.button{
         position:absolute;
         bottom:70px;
@@ -134,6 +153,7 @@
 <div class="vui share button" onclick="navigator.share({url: '<%= process.env.app_url %>@<%= cast.username %>',title: 'AEGIで<%= cast.name %>さんが配信中！\r\n#AEGI_LIVE',text: '',}).then(() => {console.log('succes')}).catch(e => {console.error(e)})">
 <span class="material-icons-outlined">share</span>
 </div>
+<div class="vui guest count"><span class="material-icons-outlined">people</span>0人</div>
 </div>
 </div>
 <script src="https://cdn.webrtc.ecl.ntt.com/skyway-4.4.0.js"></script>
@@ -182,7 +202,7 @@ $(".vui.comments").prepend(_comment);
 })
 
 socket.on("live_guest_count",function(data,fn){
-    console.log(data);
+    $(".vui.user.count").html('<span class="material-icons-outlined">people</span>'+data.count+'人');
 })
 
 let localStream;

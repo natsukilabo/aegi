@@ -57,6 +57,27 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <script src="https://momentjs.com/downloads/moment-timezone.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/ja.js" integrity="sha256-CFWtR1hGN/5Vc+kcJkqeMFND0g6gFFZdnSqUtdL7WOQ=" crossorigin="anonymous"></script>
+<style>
+    .vui.guest.count{
+        position:absolute;
+        top:10px;
+        left:10px;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        background-color:rgba(0,0,0,0.7);
+        color:#fff;
+        font-size:14px;
+        font-weight:bold;
+        border-radius:10px;
+        padding:10px;
+        margin:0px;
+        z-index:100;
+    }
+    .vui.guest.count .material-icons-outlined{
+        margin-right:5px;
+    }
+</style>
 </head>
 <body>
 <%- include('./common/header',{'path':'live','title':'ライブ配信'}) %>
@@ -95,6 +116,7 @@
 <button disabled class="vui button icon comment-submit" style="background-color:#fff;margin-left:10px;"><span class="material-icons-outlined">near_me</span></button>
 </div>
 <% } %>
+<div class="vui guest count"><span class="material-icons-outlined">people</span>0人</div>
 </div>
 </div>
 <script src="https://cdn.webrtc.ecl.ntt.com/skyway-4.4.0.js"></script>
@@ -161,6 +183,10 @@ $(this).html("<span class='material-icons-outlined'>headset</span>ミュート�
 document.getElementById('audio').muted = false;
 $(this).html("<span class='material-icons-outlined'>headset_off</span>ミュートにする");
 }
+})
+
+socket.on("live_guest_count",function(data,fn){
+    $(".vui.user.count").html('<span class="material-icons-outlined">people</span>'+data.count+'人');
 })
 
 socket.on('live_time_update',function(data,fn){
