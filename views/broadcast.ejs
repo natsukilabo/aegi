@@ -57,6 +57,56 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <script src="https://momentjs.com/downloads/moment-timezone.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/ja.js" integrity="sha256-CFWtR1hGN/5Vc+kcJkqeMFND0g6gFFZdnSqUtdL7WOQ=" crossorigin="anonymous"></script>
+<style>
+    .vui.share.button{
+        position:absolute;
+        bottom:70px;
+        right:10px;
+        display:none;
+        justify-content:center;
+        align-items:center;
+        background-color:#C747A2;
+        color:#fff;
+        width:50px;
+        height:50px;
+        opacity:0.5;
+        padding:0px;
+        margin:0px;
+        z-index:100;
+    }
+    .vui.mute.button{
+        position:absolute;
+        bottom:130px;
+        right:10px;
+        display:none;
+        justify-content:center;
+        align-items:center;
+        background-color:ddd;
+        color:#333;
+        width:50px;
+        height:50px;
+        opacity:0.5;
+        padding:0px;
+        margin:0px;
+        z-index:100;
+    }
+    .vui.mute.button.active{
+        position:absolute;
+        bottom:130px;
+        right:10px;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        background-color:red;
+        color:#fff;
+        width:50px;
+        height:50px;
+        opacity:0.5;
+        padding:0px;
+        margin:0px;
+        z-index:100;
+    }
+</style>
 </head>
 <body>
 <%- include('./common/header',{'path':'broadcast','title':'ライブ配信'}) %>
@@ -70,12 +120,6 @@
 <span class="material-icons-outlined">bolt</span>
 配信を始める
 </button>
-<!--
-<button class="vui button big red icon left mute-btn" style="display:none;margin-top:1rem;">
-<span class="material-icons-outlined">mic_off</span>
-ミュートにする
-</button>
--->
 <audio id="audio" width="400px" autoplay muted playsinline></audio>
 <div class="vui comments">
 </div>
@@ -83,6 +127,12 @@
 <input type="text" class="vui input comment-txt">
 <button class="vui button icon comment-submit" style="background-color:#fff;margin-left:10px;"><span class="material-icons-outlined">near_me</span></button>
 </div>
+</div>
+<div class="vui mute button">
+<span class="material-icons-outlined">mic_off</span>
+</div>
+<div class="vui share button" onclick="navigator.share({url: '<%= process.env.app_url %>@<%= cast.username %>',title: 'AEGIで<%= cast.name %>さんが配信中！\r\n#AEGI_LIVE',text: '',}).then(() => {console.log('succes')}).catch(e => {console.error(e)})">
+<span class="material-icons-outlined">share</span>
 </div>
 </div>
 </div>
@@ -130,6 +180,11 @@ _comment += '</div>';
 $(".vui.comments").prepend(_comment);
 }
 })
+
+socket.on("live_guest_count",function(data,fn){
+    console.log(data);
+})
+
 let localStream;
 
 //配信スタートbtn click
@@ -165,6 +220,11 @@ peer.on('call', mediaConnection => {
 mediaConnection.answer(localStream);
 });
 $(this).html('<span class="material-icons-outlined">bolt</span>配信を終わる');
+$(".vui.button.mute").css("display","flex");
+$(".vui.button.share").css("display","flex");
+socket.emit("broadcast_connect",{
+liveId: '<%= cast.username %>'
+});
 _live_status = true;
 }else{
 //ライブ配信ステータスをAPIへ送信
@@ -172,33 +232,38 @@ var data = {
 castId:'<%= cast.username %>',
 liveStatus:false
 }
-$.post('<%= process.env.app_url %>api/v1/broadcast',data,null,"json");
-_live_status = false;
-location.href = "<%= process.env.app_url %>live/end";
+$.post('<%= process.env.app_url %>api/v1/broadcast',data,null,"json").done(function(data, textStatus, jqXHR){
+    socket.emit("live_end",{
+        liveId : '<%= cast.username %>'
+    })
+    _live_status = false;
+    location.href = "<%= process.env.app_url %>broadcast/end";
+}).fail(function(jqXHR, textStatus, errorThrown){
+  alert("配信を終了することができませんでした");
+});;
 }
 })
 
-$(window).on('beforeunload', function(){
-var data = {
-castId:'<%= cast.username %>',
-liveStatus:false
-}
-$.post('<%= process.env.app_url %>api/v1/broadcast',data,null,"json");
+socket.on('live_time_update',function(data,fn){
+$(".vui.header .center").text(data.liveTime);
 })
 
 //audio関連
-$(".mute-btn").click(function(){
+$(".vui.mute.button").click(function(){
 var audioTrack = localStream.getAudioTracks()[0];
 if(audioTrack.enabled == true){
 audioTrack.enabled = false
-$(this).html("<span class='material-icons-outlined'>mic</span>");
+$(this).addClass("active");
 }else if(audioTrack.enabled == false){
 audioTrack.enabled = true
-$(this).html("<span class='material-icons-outlined'>mic_off</span>");
+$(this).removeClass("active");
 }
 })
 document.getElementById('audio').addEventListener("timeupdate",(event) => {
-$(".vui.header .center").text(toHms(Math.floor(document.getElementById('audio').currentTime)));
+socket.emit('live_time_update',{
+    liveId:'<%= cast.username %>',
+    liveTime:toHms(Math.floor(document.getElementById('audio').currentTime))
+})
 })
 function toHms(t) {
 var hms = "";
@@ -228,6 +293,7 @@ $('.datetime').each(function(index, element){
 var postDate = new Date($(element).data('datetime'));
 $(element).text(moment(postDate.toISOString()).fromNow());
 });
+socket.emit('live_guest_count',{castId:'<%= cast.username %>'});
 }
 setInterval(countUp, 1000);
 </script>

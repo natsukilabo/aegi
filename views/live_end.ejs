@@ -59,14 +59,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/ja.js" integrity="sha256-CFWtR1hGN/5Vc+kcJkqeMFND0g6gFFZdnSqUtdL7WOQ=" crossorigin="anonymous"></script>
 </head>
 <body>
-<%- include('./common/header',{'path':'live','title':'ライブ配信'}) %>
+<%- include('./common/header',{'path':'liveend','title':'ライブ配信'}) %>
 <div class="vui main" style="position:relative;">
 <div class="vui live">
 <img class="image cast" src="<%= cast.profile_icon %>" alt="">
 <span class="name cast">
 <%= cast.name %>
 </span>
-<span style="font-size:20px;color:#666;margin-top:1.5rem;">配信お疲れさまでした！</span>
+<span style="font-size:16px;color:#666;margin-top:1.5rem;">ご視聴ありがとうございました！</span>
 </div>
 </div>
 <%- include('./common/footer',{'path':'live'}) %>

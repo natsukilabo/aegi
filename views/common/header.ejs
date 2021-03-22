@@ -52,10 +52,10 @@ Version : <%= process.env.app_version %>
 chevron_left
 </span>
 </div>
-<% }else if(path == "broadcast"){ %>
-<div class="left mute-btn">
+<% }else if(path == "live"){ %>
+<div class="left" onclick="location.reload();">
 <span class="material-icons-outlined">
-mic_off
+refresh
 </span>
 </div>
 <% }else{ %>

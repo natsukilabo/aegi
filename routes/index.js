@@ -75,7 +75,23 @@ res.redirect(process.env.app_url+'auth/twitter');
 }
 });
 
-router.get('/live/end', function(req, res, next) {
+router.get('/@:id/end', function(req, res, next) {
+res.setHeader('Set-Cookie', 'back_url='+process.env.app_url+';');
+var user_token = req.cookies.user_token;
+var username = req.params.id;
+MongoClient.connect(url, (err, client) => {
+const db = client.db('aegi');
+assert.equal(null, err)
+db.collection("users").findOne({username:username}, function(err, doc){
+res.render('live_end',{
+cast:doc,
+user_token:user_token
+});
+});
+});
+});
+
+router.get('/broadcast/end', function(req, res, next) {
 res.setHeader('Set-Cookie', 'back_url='+process.env.app_url+';');
 var user_token = req.cookies.user_token;
 var username = req.params.id;
@@ -83,7 +99,7 @@ MongoClient.connect(url, (err, client) => {
 const db = client.db('aegi');
 assert.equal(null, err)
 db.collection("users").findOne({userid:user_token}, function(err, doc){
-res.render('live_end',{
+res.render('broadcast_end',{
 cast:doc,
 user_token:user_token
 });
