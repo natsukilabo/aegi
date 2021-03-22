@@ -44,7 +44,11 @@ socket.on('broadcast_connect',function(data,fn){
 })
 
 socket.on('live_guest_count',function(data,fn){
-io.to(data.castId).emit('live_guest_count',{count:numClients[data.castId]});
+    var _count = numClients[data.castId];
+    if(_count == undefined){
+        _count = 0;
+    }
+    io.to(data.castId).emit('live_guest_count',{count:_count});
 })
 
 socket.on("live_end",function(data,fn){
