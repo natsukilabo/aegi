@@ -202,7 +202,7 @@ $(".vui.comments").prepend(_comment);
 })
 
 socket.on("live_guest_count",function(data,fn){
-    $(".vui.user.count").html('<span class="material-icons-outlined">people</span>'+data.count+'人');
+    $(".vui.guest.count").html('<span class="material-icons-outlined">people</span>'+data.count+'人');
 })
 
 let localStream;

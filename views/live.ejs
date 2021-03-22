@@ -186,7 +186,7 @@ $(this).html("<span class='material-icons-outlined'>headset_off</span>ミュー�
 })
 
 socket.on("live_guest_count",function(data,fn){
-    $(".vui.user.count").html('<span class="material-icons-outlined">people</span>'+data.count+'人');
+    $(".vui.guest.count").html('<span class="material-icons-outlined">people</span>'+data.count+'人');
 })
 
 socket.on('live_time_update',function(data,fn){
