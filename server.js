@@ -90,7 +90,8 @@ socket.on('disconnecting', function (data,fn) {
         const db = client.db('aegi');
         const date1 = new Date();
         var doc = {
-            liveStatus:liveStatus
+            liveStatus:liveStatus,
+            aikotoba:''
         }
         db.collection('users').updateOne({username:castId},{$set:doc},{upsert:true});
         client.close();

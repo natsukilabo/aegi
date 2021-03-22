@@ -11,6 +11,25 @@ var multer= require('multer')
 var upload = multer()
 var io = require('socket.io-client');
 
+router.post('/v1/live/pwd',function(req,res,next){
+    var castId = req.body.castId;
+    var pwd = req.body.pwd;
+    console.log(castId +' / '+pwd);
+    MongoClient.connect(url, (err, client) => {
+        assert.equal(null, err)
+        console.log('Connected successfully to server');
+        const db = client.db('aegi');
+        db.collection("users").findOne({username:castId}, function(err, doc){
+            if(doc.aikotoba == pwd){
+                res.json({status:true});
+            }else{
+                res.json({status:false})
+            }
+        });
+        client.close();
+    });
+})
+
 /* GET home page. */
 router.get('/v1/user/:id', function(req, res, next) {
 MongoClient.connect(url, (err, client) => {
@@ -59,7 +78,8 @@ router.post('/v1/broadcast', function(req, res, next) {
     const db = client.db('aegi');
     const date1 = new Date();
     var doc = {
-        liveStatus:liveStatus
+        liveStatus:liveStatus,
+        aikotoba:req.body.aikotoba
     }
     db.collection('users').updateOne({username:castId},{$set:doc},{upsert:true});
     client.close();

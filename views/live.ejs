@@ -88,6 +88,9 @@
 <%= cast.name %>
 </span>
 <% if(cast.liveStatus == "true"){ %>
+<% if(cast.aikotoba !== undefined && cast.aikotoba !== ""){ %>
+<input type="text" id="aikotoba" class="vui input" style="width:calc(100% - 60px);margin-top:1rem;" placeholder="合言葉を入力してね！">
+<% } %>
 <button class="vui button big red connect-btn icon left" style="margin-top:1rem;">
 <span class="material-icons-outlined">bolt</span>
 視聴を開始する
@@ -103,10 +106,10 @@
 </div>
 <% } %>
 <audio id="audio" width="400px" autoplay muted playsinline></audio>
-<div class="vui comments">
+<div class="vui comments" style="display:none;">
 </div>
 <% if(user_token !== "_aegi_guest"){ %>
-<div class="vui comment form">
+<div class="vui comment form" style="display:none;">
 <input type="text" class="vui input comment-txt" placeholder="コメント…">
 <button class="vui button icon comment-submit" style="background-color:#fff;margin-left:10px;"><span class="material-icons-outlined">near_me</span></button>
 </div>
@@ -167,14 +170,40 @@ key: '4fa5667a-01e0-4038-baa4-880ef6e1e015',
 debug: 3
 });
 $(".vui.button.connect-btn").click(function(){
-socket.emit("live_connect",{
-liveId: '<%= castId %>'
-});
-const mediaConnection = peer.call("<%= castId %>");
-setEventListener(mediaConnection);
-$(this).css("display","none");
-$(".mute-btn").css("display","flex");
+    <% if(cast.aikotoba !== undefined && cast.aikotoba !== ""){ %>
+    var data = {
+        castId:'<%= castId %>',
+        pwd:$("#aikotoba").val()
+    }
+    $.post('<%= process.env.app_url %>api/v1/live/pwd',data,null,"json").done(function(data, textStatus, jqXHR){
+        if(data.status == true){
+            socket.emit("live_connect",{
+            liveId: '<%= castId %>'
+            });
+            const mediaConnection = peer.call("<%= castId %>");
+            setEventListener(mediaConnection);
+            $('.vui.button.connect-btn').css("display","none");
+            $(".mute-btn").css("display","flex");
+            $(".vui.comments").css("display","flex");
+            $(".vui.comment.form").css("display","flex");
+            $("#aikotoba").css("display","none");
+        }
+    })
+    <% }else{ %>
+    socket.emit("live_connect",{
+    liveId: '<%= castId %>'
+    });
+    const mediaConnection = peer.call("<%= castId %>");
+    setEventListener(mediaConnection);
+    $('.vui.button.connect-btn').css("display","none");
+    $(".mute-btn").css("display","flex");
+    $(".vui.comments").css("display","flex");
+    $(".vui.comment.form").css("display","flex");
+    $("#aikotoba").css("display","none");
+    <% } %>
 })
+
+
 $(".vui.button.mute-btn").click(function(){
 if(document.getElementById('audio').muted == false){
 document.getElementById('audio').muted = true;

@@ -135,14 +135,15 @@
 <span class="name cast">
 <%= cast.name %>
 </span>
+<input type="text" id="aikotoba" class="vui input" style="width:calc(100% - 60px);margin-top:1rem;" placeholder="合言葉を設定する場合は入力してね！">
 <button class="vui button big red icon left start-btn" style="margin-top:1rem;">
 <span class="material-icons-outlined">bolt</span>
 配信を始める
 </button>
 <audio id="audio" width="400px" autoplay muted playsinline></audio>
-<div class="vui comments">
+<div class="vui comments" style="display:none;"><!--flex-->
 </div>
-<div class="vui comment form">
+<div class="vui comment form" style="display:none;"><!--flex-->
 <input type="text" class="vui input comment-txt">
 <button class="vui button icon comment-submit" style="background-color:#fff;margin-left:10px;"><span class="material-icons-outlined">near_me</span></button>
 </div>
@@ -191,7 +192,7 @@ var _comment = "<div class='item'>";
 _comment += '<div class="userinfo">';
 _comment += '<img class="userimage" src="'+data.fromProfileIcon+'"">';
 _comment += '<div class="tweetinfo">';
-_comment += '<span class="username">'+data.fromName+'・<span class="datetime" data-datetime="'+data.message+'"></span></span>';
+_comment += '<span class="username">'+data.fromName+'・<span class="datetime" data-datetime="'+data.createdAt+'"></span></span>';
 _comment += '<div class="tweet">'+data.message+'</div>';
 _comment += '</div>';
 _comment += '</div>';
@@ -214,6 +215,7 @@ if(_live_status == false){
 //ライブ配信ステータスをAPIへ送信
 var data = {
 castId:'<%= cast.username %>',
+aikotoba:$("#aikotoba").val(),
 liveStatus:true
 }
 $.post('<%= process.env.app_url %>api/v1/broadcast',data,null,"json");
@@ -242,6 +244,9 @@ mediaConnection.answer(localStream);
 $(this).html('<span class="material-icons-outlined">bolt</span>配信を終わる');
 $(".vui.button.mute").css("display","flex");
 $(".vui.button.share").css("display","flex");
+$(".vui.comments").css("display","flex");
+$(".vui.comment.form").css("display","flex");
+$("#aikotoba").css("display","none");
 socket.emit("broadcast_connect",{
 liveId: '<%= cast.username %>'
 });
@@ -250,6 +255,7 @@ _live_status = true;
 //ライブ配信ステータスをAPIへ送信
 var data = {
 castId:'<%= cast.username %>',
+aikotoba:'',
 liveStatus:false
 }
 $.post('<%= process.env.app_url %>api/v1/broadcast',data,null,"json").done(function(data, textStatus, jqXHR){
