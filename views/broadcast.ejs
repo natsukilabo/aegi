@@ -284,6 +284,7 @@ socket.emit('live_time_update',{
     liveId:'<%= cast.username %>',
     liveTime:toHms(Math.floor(document.getElementById('audio').currentTime))
 })
+socket.emit('live_guest_count',{castId:'<%= cast.username %>'});
 })
 function toHms(t) {
 var hms = "";
@@ -313,7 +314,6 @@ $('.datetime').each(function(index, element){
 var postDate = new Date($(element).data('datetime'));
 $(element).text(moment(postDate.toISOString()).fromNow());
 });
-socket.emit('live_guest_count',{castId:'<%= cast.username %>'});
 }
 setInterval(countUp, 1000);
 </script>
