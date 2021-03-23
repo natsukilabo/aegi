@@ -220,19 +220,46 @@ liveStatus:true
 }
 $.post('<%= process.env.app_url %>api/v1/broadcast',data,null,"json");
 // カメラ映像取得
-navigator.mediaDevices.getUserMedia({video: false, audio: {sampleRate: 48000,channelCount: 2,volume: 1.0}})
-.then( stream => {
-// 成功時にvideo要素にカメラ映像をセットし、再生
-const audioElm = document.getElementById('audio');
-audioElm.srcObject = stream;
-audioElm.play();
-// 着信時に相手にカメラ映像を返せるように、グローバル変数に保存しておく
-localStream = stream;
-}).catch( error => {
-// 失敗時にはエラーログを出力
-console.error('mediaDevice.getUserMedia() error:', error);
-return;
-});
+
+// constraints
+var constraints = {
+    video: false,
+    audio: { echoCancellation: false }  // エコーキャンセラ無効化
+  };
+  // constraints (Chrome)
+  if (window.chrome) {
+    var constraints = {
+      video: false,
+      audio: {mandatory: {echoCancellation : false, googEchoCancellation: false}}  
+    };
+  }
+
+  // Initialize getUserMedia
+  navigator.getUserMedia = ( navigator.getUserMedia ||
+    navigator.webkitGetUserMedia ||
+    navigator.mozGetUserMedia ||
+    navigator.msGetUserMedia);
+
+  if (navigator.getUserMedia) {
+     navigator.getUserMedia (
+       constraints,
+       // successCallback
+       function(stream) {
+           // 成功時にvideo要素にカメラ映像をセットし、再生
+            const audioElm = document.getElementById('audio');
+            audioElm.srcObject = stream;
+            audioElm.play();
+            // 着信時に相手にカメラ映像を返せるように、グローバル変数に保存しておく
+            localStream = stream;
+       },
+       // errorCallback
+       function(err) {
+         alert('The following error occurred: ' + err);
+       }
+     );
+  } else {
+    alert('getUserMedia not supported');
+  }
 //skyway start
 const peer = new Peer("<%= cast.username %>",{
 key: '4fa5667a-01e0-4038-baa4-880ef6e1e015',
