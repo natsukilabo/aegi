@@ -32,6 +32,10 @@ user_token:user_token
 });
 })
 
+router.get('/test',function(req,res,next){
+    res.render('test',{});
+})
+
 router.get('/live/@:id', function(req, res, next) {
 res.setHeader('Set-Cookie', 'back_url='+process.env.app_url+'live/@'+req.params.id+';');
 var user_token = req.cookies.user_token;
