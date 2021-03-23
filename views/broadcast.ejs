@@ -220,7 +220,7 @@ liveStatus:true
 }
 $.post('<%= process.env.app_url %>api/v1/broadcast',data,null,"json");
 // カメラ映像取得
-navigator.mediaDevices.getUserMedia({video: false, audio: true})
+navigator.mediaDevices.getUserMedia({video: false, audio: { echoCancellation: false } })
 .then( stream => {
 // 成功時にvideo要素にカメラ映像をセットし、再生
 const audioElm = document.getElementById('audio');
