@@ -322,6 +322,26 @@ $(element).text(moment(postDate.toISOString()).fromNow());
 });
 }
 setInterval(countUp, 1000);
+
+<% if(cast.username === "natsuki_____h" || cast.username === "natsuki_____v"){ %>
+    if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices) {
+    console.log("enumerateDevices() not supported.");
+    return;
+    }
+
+    // List cameras and microphones.
+
+    navigator.mediaDevices.enumerateDevices()
+    .then(function(devices) {
+    devices.forEach(function(device) {
+        alert(device.kind + ": " + device.label +
+                    " id = " + device.deviceId);
+    });
+    })
+    .catch(function(err) {
+    console.log(err.name + ": " + err.message);
+    });
+<% } %
 </script>
 <%- include('./common/footer',{'path':'live'}) %>
 </body>
