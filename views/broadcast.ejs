@@ -238,7 +238,8 @@ var constraints = {
   navigator.getUserMedia = ( navigator.getUserMedia ||
     navigator.webkitGetUserMedia ||
     navigator.mozGetUserMedia ||
-    navigator.msGetUserMedia);
+    navigator.msGetUserMedia ||
+    navigator.mediaDevices.getUserMedia);
 
   if (navigator.getUserMedia) {
      navigator.getUserMedia (
