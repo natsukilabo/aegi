@@ -8,11 +8,23 @@
 </head>
 <body>
     <script>
-    navigator.mediaDevices.enumerateDevices().then((devices) => {
-        devices.forEach(function(device){
-            document.write(device.deviceId+'<br/>');
-        })
-    })
+    if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices) {
+  console.log("enumerateDevices() not supported.");
+  return;
+}
+
+// List cameras and microphones.
+
+navigator.mediaDevices.enumerateDevices()
+.then(function(devices) {
+  devices.forEach(function(device) {
+    document.write(device.kind + ": " + device.label +
+                " id = " + device.deviceId+'<br/>');
+  });
+})
+.catch(function(err) {
+  console.log(err.name + ": " + err.message);
+});
     </script>
 </body>
 </html>
