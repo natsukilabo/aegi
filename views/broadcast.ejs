@@ -125,6 +125,22 @@
         margin:0px;
         z-index:100;
     }
+    .vui.record.button.start,.vui.record.button.stop{
+        position:absolute;
+        bottom:190px;
+        right:10px;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        background-color:red;
+        color:#fff;
+        width:50px;
+        height:50px;
+        opacity:0.5;
+        padding:0px;
+        margin:0px;
+        z-index:100;
+    }
 </style>
 </head>
 <body>
@@ -147,6 +163,9 @@
 <input type="text" class="vui input comment-txt">
 <button class="vui button icon comment-submit" style="background-color:#fff;margin-left:10px;"><span class="material-icons-outlined">near_me</span></button>
 </div>
+</div>
+<div class="vui record button start">
+<span class="material-icons-outlined">fiber_manual_record</span>
 </div>
 <div class="vui mute button">
 <span class="material-icons-outlined">mic_off</span>
@@ -207,6 +226,7 @@ socket.on("live_guest_count",function(data,fn){
 })
 
 let localStream;
+let mediaRecorder;
 
 //配信スタートbtn click
 var _live_status = false;
@@ -228,6 +248,8 @@ navigator.mediaDevices.getUserMedia({
     }
 })
 .then( stream => {
+    //録音
+    mediaRecorder = new MediaRecorder(stream);
 // 成功時にvideo要素にカメラ映像をセットし、再生
 const audioElm = document.getElementById('audio');
 audioElm.srcObject = stream;
@@ -281,9 +303,31 @@ socket.on('live_time_update',function(data,fn){
 $(".vui.header .center").text(data.liveTime);
 })
 
+$('body').on('click', '.vui.record.button.start' , function() {
+        alert('test')
+        mediaRecorder.start();
+        $(this).removeClass("start");
+        $(this).addClass("stop");
+        console.log("recorder started");
+    });
+    $('body').on('click', '.vui.record.button.stop' , function() {
+        alert('test2')
+        mediaRecorder.stop();
+        $(this).removeClass("stop");
+        $(this).addClass("start");
+        console.log("recorder stopped");
+    });
+    mediaRecorder.ondataavailable = function(e) {
+        console.log("data available after MediaRecorder.stop() called.");
+        var audio = document.createElement('audio');
+        audio.setAttribute('controls', '');
+        var audioURL = window.URL.createObjectURL(e.data);
+        audio.src = audioURL;
+    }
+
 //audio関連
 $(".vui.mute.button").click(function(){
-var audioTrack = localStream.getAudioTracks()[1];
+var audioTrack = stream.getAudioTracks()[0];
 if(audioTrack.enabled == true){
 audioTrack.enabled = false
 $(this).addClass("active");
