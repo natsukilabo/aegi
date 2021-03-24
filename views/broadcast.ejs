@@ -222,7 +222,9 @@ $.post('<%= process.env.app_url %>api/v1/broadcast',data,null,"json");
 // カメラ映像取得
 var constraints = {
     video: false,
-    audio: { echoCancellation: false }  // エコーキャンセラ無効化
+    audio: { echoCancellation: false,
+            channelCount:{ideal: 5.1, min: 1}
+        }  // エコーキャンセラ無効化
 };
 // constraints (Chrome)
 if (window.chrome) {
