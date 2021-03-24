@@ -230,12 +230,12 @@ socket.on("end",function(){
 
 // イベントリスナを設置する関数
 const setEventListener = mediaConnection => {
-mediaConnection.on('stream', stream => {
-// video要素にカメラ映像をセットして再生
-const videoElm = document.getElementById('audio');
-videoElm.srcObject = stream;
-videoElm.play();
-});
+    mediaConnection.on('stream', stream => {
+    // video要素にカメラ映像をセットして再生
+    const videoElm = document.getElementById('audio')
+    videoElm.srcObject = stream;
+    videoElm.play();
+  });
 }
 
 //日付処理...

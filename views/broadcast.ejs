@@ -245,7 +245,8 @@ key: '4fa5667a-01e0-4038-baa4-880ef6e1e015',
 debug: 3
 });
 peer.on('call', mediaConnection => {
-mediaConnection.answer(localStream);
+    mediaConnection.answer(localStream);
+  setEventListener(mediaConnection);
 });
 $(this).html('<span class="material-icons-outlined">bolt</span>配信を終わる');
 $(".vui.button.mute").css("display","flex");
