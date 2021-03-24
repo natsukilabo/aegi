@@ -228,7 +228,10 @@ var constraints = {
 if (window.chrome) {
     var constraints = {
         video: false,
-        audio: {mandatory: {echoCancellation : false, googEchoCancellation: false}}  
+        audio: {
+            mandatory: {echoCancellation : false, googEchoCancellation: false},
+            channelCount:{ideal: 5.1, min: 1}
+        }  
     };
 }
 navigator.mediaDevices.getUserMedia(constraints)
