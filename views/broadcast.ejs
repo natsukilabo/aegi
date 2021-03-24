@@ -226,7 +226,6 @@ socket.on("live_guest_count",function(data,fn){
 })
 
 let localStream;
-let mediaRecorder;
 
 //配信スタートbtn click
 var _live_status = false;
@@ -248,8 +247,6 @@ navigator.mediaDevices.getUserMedia({
     }
 })
 .then( stream => {
-    //録音
-    mediaRecorder = new MediaRecorder(stream);
 // 成功時にvideo要素にカメラ映像をセットし、再生
 const audioElm = document.getElementById('audio');
 audioElm.srcObject = stream;
@@ -302,28 +299,6 @@ $.post('<%= process.env.app_url %>api/v1/broadcast',data,null,"json").done(funct
 socket.on('live_time_update',function(data,fn){
 $(".vui.header .center").text(data.liveTime);
 })
-
-$('body').on('click', '.vui.record.button.start' , function() {
-        alert('test')
-        mediaRecorder.start();
-        $(this).removeClass("start");
-        $(this).addClass("stop");
-        console.log("recorder started");
-    });
-    $('body').on('click', '.vui.record.button.stop' , function() {
-        alert('test2')
-        mediaRecorder.stop();
-        $(this).removeClass("stop");
-        $(this).addClass("start");
-        console.log("recorder stopped");
-    });
-    mediaRecorder.ondataavailable = function(e) {
-        console.log("data available after MediaRecorder.stop() called.");
-        var audio = document.createElement('audio');
-        audio.setAttribute('controls', '');
-        var audioURL = window.URL.createObjectURL(e.data);
-        audio.src = audioURL;
-    }
 
 //audio関連
 $(".vui.mute.button").click(function(){
