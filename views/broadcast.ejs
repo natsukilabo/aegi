@@ -164,9 +164,11 @@
 <button class="vui button icon comment-submit" style="background-color:#fff;margin-left:10px;"><span class="material-icons-outlined">near_me</span></button>
 </div>
 </div>
+<!--
 <div class="vui record button start">
 <span class="material-icons-outlined">fiber_manual_record</span>
 </div>
+-->
 <div class="vui mute button">
 <span class="material-icons-outlined">mic_off</span>
 </div>
@@ -302,7 +304,7 @@ $(".vui.header .center").text(data.liveTime);
 
 //audio関連
 $(".vui.mute.button").click(function(){
-var audioTrack = stream.getAudioTracks()[0];
+var audioTrack = localStream.getAudioTracks()[0];
 if(audioTrack.enabled == true){
 audioTrack.enabled = false
 $(this).addClass("active");
