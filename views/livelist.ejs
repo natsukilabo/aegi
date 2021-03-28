@@ -93,12 +93,14 @@
 <div class="vui main">
 <div class="vui cast list">
 <% if(casts !== undefined){casts.forEach(function(cast){ %>
+<% if(cast.aikotoba == ""){ %>
 <a class="cast" href="<%= process.env.app_url %>live/@<%= cast.username %>">
 <img src="<%= cast.profile_icon %>">
 <span class="name">
 <%= cast.name %>
 </span>
 </a>
+<% } %>
 <% })} %>
 </div>
 </div>
