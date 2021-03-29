@@ -10,6 +10,7 @@ const uuid = require("uuid");
 var multer= require('multer')
 var upload = multer()
 var io = require('socket.io-client');
+const sharp = require('sharp')
 
 router.post('/v1/live/pwd',function(req,res,next){
     var castId = req.body.castId;
