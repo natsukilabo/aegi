@@ -59,7 +59,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/ja.js" integrity="sha256-CFWtR1hGN/5Vc+kcJkqeMFND0g6gFFZdnSqUtdL7WOQ=" crossorigin="anonymous"></script>
 </head>
 <body>
-<%- include('./common/header',{'path':'broadcast','title':'ライブ配信'}) %>
+<%- include('./common/header',{'path':'selectbroadcast','title':'ライブ配信'}) %>
 <div class="vui main" style="display:flex;flex-direction:column;justify-content:center;align-items:center;">
 <a href="<%= process.env.app_url %>broadcast/radio" class="vui button big red icon left">
     <span class="material-icons-outlined">bolt</span>
@@ -70,6 +70,6 @@
     カメラ配信
 </a>
 </div>
-<%- include('./common/footer',{'path':'broadcast'}) %>
+<%- include('./common/footer',{'path':'selectbroadcast'}) %>
 </body>
 </html>
