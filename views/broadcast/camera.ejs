@@ -252,7 +252,7 @@ $.post('<%= process.env.app_url %>api/v1/broadcast',data,null,"json");
 navigator.mediaDevices.getUserMedia({
     video: {
         width: 640, height: 360,
-        facingMode: null
+        facingMode: 'environment'
     },
     audio: true
 })
