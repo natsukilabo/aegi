@@ -251,6 +251,7 @@ liveType:"camera"
 }
 $.post('<%= process.env.app_url %>api/v1/broadcast',data,null,"json");
 // カメラ映像取得
+console.log(result.device.type);
 if (result.device.type !== 'mobile') {
 navigator.mediaDevices.getUserMedia({
     video: {
