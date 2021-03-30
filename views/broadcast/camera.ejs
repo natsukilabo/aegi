@@ -180,8 +180,10 @@
 </div>
 <script src="https://cdn.webrtc.ecl.ntt.com/skyway-4.4.0.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stackblur-canvas/2.5.0/stackblur.min.js" integrity="sha512-W5pl1mdnRnOONc8pHMFi5xyBNNNHo6N7Q2psPRHWMPR47VyO6F/sL1G5PpRLBcsd9QL+WfDa0J9mEsGoxQH+RQ==" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/ua-parser-js@0/dist/ua-parser.min.js"></script>
 <script>
 //コメントサーバーへ接続('◇')ゞ
+var result = UAParser();
 var socket = io.connect("<%= process.env.wss_url %>");
 const video = document.getElementById('video');
 const canvas = document.getElementById('canvas');
@@ -249,7 +251,28 @@ liveType:"camera"
 }
 $.post('<%= process.env.app_url %>api/v1/broadcast',data,null,"json");
 // カメラ映像取得
+if (result.device.type !== 'mobile') {
 navigator.mediaDevices.getUserMedia({
+    video: {
+        width: cw, height: ch,
+        facingMode: 'environment'
+    },
+    audio: true
+})
+.then( stream => {
+// 成功時にvideo要素にカメラ映像をセットし、再生
+video.srcObject = stream;
+video.play();
+blurVideo();
+// 着信時に相手にカメラ映像を返せるように、グローバル変数に保存しておく
+localStream = stream;
+}).catch( error => {
+// 失敗時にはエラーログを出力
+console.error('mediaDevice.getUserMedia() error:', error);
+return;
+});
+}else{
+    navigator.mediaDevices.getUserMedia({
     video: {
         width: ch, height: cw,
         facingMode: 'environment'
@@ -268,6 +291,7 @@ localStream = stream;
 console.error('mediaDevice.getUserMedia() error:', error);
 return;
 });
+}
 
 function blurVideo(blur){
 canvas.getContext("2d").drawImage(video, 0, 0, cw, ch);
