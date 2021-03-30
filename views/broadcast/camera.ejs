@@ -251,7 +251,7 @@ $.post('<%= process.env.app_url %>api/v1/broadcast',data,null,"json");
 // カメラ映像取得
 navigator.mediaDevices.getUserMedia({
     video: {
-        width: 640, height: 360,
+        width: cw, height: ch,
         facingMode: 'environment'
     },
     audio: true
