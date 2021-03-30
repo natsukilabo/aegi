@@ -80,7 +80,8 @@ router.post('/v1/broadcast', function(req, res, next) {
     const date1 = new Date();
     var doc = {
         liveStatus:liveStatus,
-        aikotoba:req.body.aikotoba
+        aikotoba:req.body.aikotoba,
+        liveType:req.body.liveType
     }
     db.collection('users').updateOne({username:castId},{$set:doc},{upsert:true});
     client.close();
