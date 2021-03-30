@@ -102,16 +102,10 @@ res.redirect(process.env.app_url+'auth/twitter');
 });
 
 router.get('/broadcast', function(req, res, next) {
-    res.setHeader('Set-Cookie', 'back_url='+process.env.app_url+'broadcast;');
-    var user_token = req.cookies.user_token;
-    if(user_token !== undefined){ 
-    res.render('broadcast',{
-    user_token:user_token
-    });
-    }else{
-    res.redirect(process.env.app_url+'auth/twitter');
-    }
-    });
+res.setHeader('Set-Cookie', 'back_url='+process.env.app_url+'broadcast;');
+var user_token = req.cookies.user_token;
+res.render('broadcast', {user_token:user_token});
+});
 
 //配信画面(カメラ)
 router.get('/broadcast/camera', function(req, res, next) {
