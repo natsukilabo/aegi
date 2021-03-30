@@ -104,8 +104,7 @@ res.redirect(process.env.app_url+'auth/twitter');
 router.get('/broadcast', function(req, res, next) {
     res.setHeader('Set-Cookie', 'back_url='+process.env.app_url+'broadcast;');
     var user_token = req.cookies.user_token;
-    if(user_token !== undefined){
-    var username = req.params.id;    
+    if(user_token !== undefined){ 
     res.render('broadcast',{
     user_token:user_token
     });
